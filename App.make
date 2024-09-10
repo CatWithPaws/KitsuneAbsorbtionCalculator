@@ -50,9 +50,13 @@ endef
 GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/Dice.o
+GENERATED += $(OBJDIR)/KitsuneAbsorption.o
 GENERATED += $(OBJDIR)/imgui_impl_glfw.o
 GENERATED += $(OBJDIR)/imgui_impl_opengl3.o
 GENERATED += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/Dice.o
+OBJECTS += $(OBJDIR)/KitsuneAbsorption.o
 OBJECTS += $(OBJDIR)/imgui_impl_glfw.o
 OBJECTS += $(OBJDIR)/imgui_impl_opengl3.o
 OBJECTS += $(OBJDIR)/main.o
@@ -119,6 +123,12 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/Dice.o: src/app/Dice.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/KitsuneAbsorption.o: src/app/KitsuneAbsorption.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/imgui_impl_glfw.o: src/app/imgui/imgui_impl_glfw.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"

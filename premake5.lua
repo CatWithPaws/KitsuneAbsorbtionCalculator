@@ -12,14 +12,14 @@ include "src/vendor/imgui"
 project "App"
     kind "ConsoleApp"
     language "C++"
-    files {"src/app**h","src/app/**.cpp"}
-
-
+    
     staticruntime "On"
-
+    
     targetdir("bin/" .. outputDir .. "/%{prj.name}")
     objdir("bin-int/" .. outputDir .. "/%{prj.name}")
-
+    
+    files {"src/app/**.h","src/app/**.cpp"}
+    
     includedirs {
         "src/vendor/glfw/include",
         "src/vendor/imgui/backends",

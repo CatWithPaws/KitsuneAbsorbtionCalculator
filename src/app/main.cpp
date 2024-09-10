@@ -7,18 +7,31 @@
 
 #include "stdio.h"
 
+#include "KitsuneAbsorption.h"
+#include "Dice.h"
+
 int main (){
-    printf("heeloo\n");
     if(!glfwInit()){
         printf("Cannot init GLFW");
     }
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,3);
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", nullptr, nullptr);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //glfwWindowHint(GLFW_DECORATED,GLFW_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    //glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+
+    ImVec2 winSize(600,800);
+
+    GLFWwindow* window = glfwCreateWindow(winSize.x,winSize.y, "KitsuneCalculator", nullptr, nullptr);
+    
     if (window == nullptr)
         return 1;
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
 
+    
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -30,6 +43,7 @@ int main (){
     //io.ConfigViewportsNoAutoMerge = true;
     //io.ConfigViewportsNoTaskBarIcon = true;
 
+  
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsLight();
@@ -43,10 +57,22 @@ int main (){
     }
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    bool show_demo_window = true;
     // Setup Platform/Renderer backends
+    
     ImGui_ImplOpenGL3_Init();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
+
+    KitsuneAbsorption kitsune(0,0,0);
+
+    int damage = 0;
+    int lastDamageInput = 0;
+
+    int absorbedDamage = 0;
+    int regeneratedChakra = 0;
+    int storedDamage = 0;
+    int healed = 0;
+
+    Dice::Init();
 
      while (!glfwWindowShouldClose(window)){
         glfwPollEvents();
@@ -55,14 +81,45 @@ int main (){
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
+        ImGuiViewport* viewport = ImGui::GetMainViewport();
+     
+        ImGui::SetNextWindowPos(viewport->WorkPos); 
+        ImGui::SetNextWindowSize(viewport->WorkSize); 
+        ImGui::GetStyle().WindowMenuButtonPosition = ImGuiDir_None;
+        
 
+        ImGui::Begin("Calc",nullptr,ImGuiWindowFlags_NoTitleBar);
+        
+        ImGui::Text("Character Data");
+
+        ImGui::InputInt("Level",&kitsune.Level,1,1);
+        ImGui::InputInt("Wisdom",&kitsune.WisdomModifier,1,1);
+        ImGui::InputInt("Tail Count",&kitsune.TailsCount,1,1);
+        ImGui::InputInt("Absorption Capacity",&kitsune.AbsorptionCapacity,1,1);
+
+        ImGui::InputInt("Dealt Damage", &damage,1,1);
+
+        ImGui::Checkbox("Vest Of Inverted Reality Equipped?",&kitsune.IsVestmentsOfInvertedRealityEquipped);
+
+        bool IsCalculationBtnPressed = ImGui::Button("Calculate Absorption",{300,50});
+
+        if(IsCalculationBtnPressed){
+            int* absorptionData = kitsune.Absorb(damage);
+            absorbedDamage = absorptionData[KT_ABSORBED_DAMAGE];
+            regeneratedChakra = absorptionData[KT_REGENERATED_CHAKRA];
+            storedDamage = absorptionData[KT_STORED_DAMAGE];
+        }
+
+        ImGui::Text("Damage Absorbed: %d\nChakra regenerated: %d\nStored Damage: %d", absorbedDamage, regeneratedChakra, storedDamage);
+
+        ImGui::End();
+
+        
         ImGui::Render();
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        glClearColor(0.0f,0.0f,0.0f,0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
