@@ -22,7 +22,7 @@ int main (){
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
     //glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 
-    ImVec2 winSize(600,800);
+    ImVec2 winSize(600,400);
 
     GLFWwindow* window = glfwCreateWindow(winSize.x,winSize.y, "KitsuneCalculator", nullptr, nullptr);
     
@@ -63,9 +63,6 @@ int main (){
     ImGui_ImplGlfw_InitForOpenGL(window, true);
 
     KitsuneAbsorption kitsune(20,10,9);
-
-    int physicsDamage = 0;
-    int magicDamage = 0;
     int lastDamageInput = 0;
 
     int absorbedDamage = 0;
@@ -73,6 +70,7 @@ int main (){
     int storedDamage = 0;
     int healed = 0;
     int* damageDealt = new int[2] {0};
+
     Dice::Init();
 
      while (!glfwWindowShouldClose(window)){
@@ -112,8 +110,11 @@ int main (){
             healed = absorptionData[KT_HEALED];
         }
 
-        ImGui::Text("Damage Absorbed: %d\nChakra regenerated: %d\nStored Damage: %d\nHealed: %d", absorbedDamage, regeneratedChakra, storedDamage, healed);
-
+        ImGui::Text("Chakra regenerated: %d\nStored Damage: %d", regeneratedChakra, storedDamage);
+        ImGui::Text("Absorbed Damage: %d", absorbedDamage);
+        ImGui::Text("Total Damage %d", (damageDealt[0] + damageDealt[1]));
+        ImGui::Text("Damage Dealt: %d", (damageDealt[0] + damageDealt[1]) - absorbedDamage);
+        ImGui::Text("Heal %d", healed);
         ImGui::End();
 
         

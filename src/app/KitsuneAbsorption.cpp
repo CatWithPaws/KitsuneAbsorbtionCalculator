@@ -56,7 +56,7 @@ int *KitsuneAbsorption::Absorb(int physicsDamage, int magicDamage)
 
 int KitsuneAbsorption::VestmentAbsorption(int damage, int* healed){
     if(!IsVestmentsOfInvertedRealityEquipped) return 0;
-int absorbedDamage = 0;
+    int absorbedDamage = 0;
     if(damage >= 20){
         absorbedDamage = (int)ceil((float)damage/2);
         int healsCount = (int)ceil((float)absorbedDamage/10);
