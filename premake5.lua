@@ -7,6 +7,7 @@ startproject "App"
 outputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 include "src/vendor/imgui"
+include "src/vendor/glfw"
 
 
 project "App"
@@ -25,14 +26,16 @@ project "App"
         "src/vendor/imgui/backends",
         "src/vendor/imgui",
     }
-    
     links{
         "ImGui",
-        "X11",
-        "glfw",
-        "GL"
+        "GLFW"
     }
-
+    filter{"system:linux"}
+    	links{
+            "X11",
+            "GLFW",
+            "GL"
+        }
     filter { "configurations:Debug" }
         defines { "DEBUG" }
         symbols "On"
