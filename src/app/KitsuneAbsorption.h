@@ -19,7 +19,7 @@ class KitsuneAbsorption{
     : Level(level),WisdomModifier(wisdomModifier),TailsCount(tailsCount), AbsorptionCapacity((5 * wisdomModifier) + level)
     {}
 
-    int* Absorb(int damage);
+    int* Absorb(int phycDamage, int magDamage);
     int BasicAbsorption();
     int VestmentAbsorption(int damage,int* healed);
     inline int CalcRegeneratedChakra(int absorbedDamage)  { return (int)trunc((float)absorbedDamage/(float)10);}

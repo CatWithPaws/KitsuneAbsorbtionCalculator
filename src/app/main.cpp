@@ -62,16 +62,17 @@ int main (){
     ImGui_ImplOpenGL3_Init();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
 
-    KitsuneAbsorption kitsune(0,0,0);
+    KitsuneAbsorption kitsune(20,10,9);
 
-    int damage = 0;
+    int physicsDamage = 0;
+    int magicDamage = 0;
     int lastDamageInput = 0;
 
     int absorbedDamage = 0;
     int regeneratedChakra = 0;
     int storedDamage = 0;
     int healed = 0;
-
+    int* damageDealt = new int[2] {0};
     Dice::Init();
 
      while (!glfwWindowShouldClose(window)){
@@ -97,20 +98,21 @@ int main (){
         ImGui::InputInt("Tail Count",&kitsune.TailsCount,1,1);
         ImGui::InputInt("Absorption Capacity",&kitsune.AbsorptionCapacity,1,1);
 
-        ImGui::InputInt("Dealt Damage", &damage,1,1);
+        ImGui::InputInt2("Dealt damage (physical, magical)", damageDealt);
 
         ImGui::Checkbox("Vest Of Inverted Reality Equipped?",&kitsune.IsVestmentsOfInvertedRealityEquipped);
 
         bool IsCalculationBtnPressed = ImGui::Button("Calculate Absorption",{300,50});
 
         if(IsCalculationBtnPressed){
-            int* absorptionData = kitsune.Absorb(damage);
+            int* absorptionData = kitsune.Absorb(damageDealt[0],damageDealt[1]);
             absorbedDamage = absorptionData[KT_ABSORBED_DAMAGE];
             regeneratedChakra = absorptionData[KT_REGENERATED_CHAKRA];
             storedDamage = absorptionData[KT_STORED_DAMAGE];
+            healed = absorptionData[KT_HEALED];
         }
 
-        ImGui::Text("Damage Absorbed: %d\nChakra regenerated: %d\nStored Damage: %d", absorbedDamage, regeneratedChakra, storedDamage);
+        ImGui::Text("Damage Absorbed: %d\nChakra regenerated: %d\nStored Damage: %d\nHealed: %d", absorbedDamage, regeneratedChakra, storedDamage, healed);
 
         ImGui::End();
 
