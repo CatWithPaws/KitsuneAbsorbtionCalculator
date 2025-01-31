@@ -17,6 +17,10 @@
     <ClInclude Include="src\app\imgui\imgui_impl_opengl3_loader.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="src\app\Window.h" />
+    <ClInclude Include="src\app\Renderer\Shaders.h" />
+    <ClInclude Include="src\app\Log.h" />
+    <ClInclude Include="src\app\Render\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\app\Dice.cpp" />
@@ -28,5 +32,10 @@
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="src\app\main.cpp" />
+    <ClCompile Include="src\app\Window.cpp" />
+    <ClCompile Include="src\app\Log.cpp" />
+    <ClCompile Include="src\app\Render\Animation.h" />
+    <ClCompile Include="src\app\Render\Texture.cpp" />
+    <ClCompile Include="src\app\Render\Animation.cpp" />
   </ItemGroup>
 </Project>

@@ -38,7 +38,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src\vendor\glfw\include;src\vendor\imgui\backends;src\vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src\vendor\glm;src\vendor\stbimage;src\app;src\vendor\spdlog\include;src\vendor\Glad\include;src\vendor\glfw\include;src\vendor\imgui\backends;src\vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -56,13 +56,22 @@
     <ClInclude Include="src\app\imgui\imgui_impl_glfw.h" />
     <ClInclude Include="src\app\imgui\imgui_impl_opengl3.h" />
     <ClInclude Include="src\app\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="src\app\Log.h" />
+    <ClInclude Include="src\app\Renderer\Shaders.h" />
+    <ClInclude Include="src\app\Render\Texture.h" />
+    <ClInclude Include="src\app\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\app\Dice.cpp" />
     <ClCompile Include="src\app\KitsuneAbsorption.cpp" />
     <ClCompile Include="src\app\imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="src\app\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\app\Log.cpp" />
     <ClCompile Include="src\app\main.cpp" />
+    <ClCompile Include="src\app\Render\Animation.cpp" />
+    <ClCompile Include="src\app\Render\Animation.h" />
+    <ClCompile Include="src\app\Render\Texture.cpp" />
+    <ClCompile Include="src\app\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="src\vendor\imgui\ImGui.vcxproj">
